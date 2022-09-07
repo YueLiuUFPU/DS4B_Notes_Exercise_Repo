@@ -1,0 +1,69 @@
+DSB Lab2 Homework
+
+Exercise 1
+
+Assume you are collecting insects at three different locations, three times a year, over the span of three years. For each day/location of sampling, you record:
+
+§Site data: site of the sampling, its geographic coordinates, description of the site
+§Sampling data: day, month, and year, weather conditions, temperature, humidity, etc.;
+§Species data: classification according to species and stage of development of all the insects collected, their total, and their measurements
+Write out the plan of your design of all the tables you are making, and how you are going to relate them together.
+
+Fist, I will make a table (table 1) for site information including variables as site id, site of the sampling, geographic coordinates, and description of the site. Each variable occupies a column in the table.
+
+Then, I plan to make a table (table 2) for sampling information including variables as sampling id, day, month, and year, weather conditions, temperature, and humidity. Each variable occupies a column in the table.
+
+Third, I plan to make a table (table 3) for species data including site id, sampling id, species name, stage of development the collected insect, total number of collected insects for this species, and their measurements. Each variable occupies a column in the table.
+
+The first two columns in table 3 (the "site id" and "sampling id") are used to relate site information and sampling information to species data.
+
+
+
+Exercise 2 code
+get the first two lines of all the files ending with .csv within data/ directory, and save them to a single file called “headers.csv” under sandbox/
+
+Last login: Wed Aug 31 21:33:42 on ttys000
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+MacBook-Pro:~ liuyue$ cd Desktop/lab1_unix_DSB_2/data/
+MacBook-Pro:data liuyue$ ls
+Buzzard2015_about.txt	Marra2014_about.txt	Saavedra2013
+Buzzard2015_data.csv	Marra2014_data.fasta	Saavedra2013_about.txt
+Gesquiere2011_about.txt	Pacifici2013_about.txt	miRNA
+Gesquiere2011_data.csv	Pacifici2013_data.csv
+MacBook-Pro:data liuyue$ head -n 2 *.csv > headers.csv
+MacBook-Pro:data liuyue$ ls
+Buzzard2015_about.txt	Marra2014_about.txt	Saavedra2013
+Buzzard2015_data.csv	Marra2014_data.fasta	Saavedra2013_about.txt
+Gesquiere2011_about.txt	Pacifici2013_about.txt	headers.csv
+Gesquiere2011_data.csv	Pacifici2013_data.csv	miRNA
+MacBook-Pro:data liuyue$ mv ./headers.csv ../sandbox
+MacBook-Pro:data liuyue$ cd  ../sandbox
+MacBook-Pro:sandbox liuyue$ ls
+copyThisFolder				test.csv
+createEmpty.txt				underscore_is_preferred
+headers.csv				unix names should not contain spaces
+MacBook-Pro:sandbox liuyue$ less headers.csv 
+
+==> Buzzard2015_data.csv <==
+age,plot,genus,species,spcode,Abund.n,biomass,basal.area,SLA,LDMC,LPC,CN,d15N,d13C,plot total abund,total plot biomass,total plot basal area
+10,1,Byrsonima,crassifolia,Byrcra,57,1205.364427,3978.387,62.09219184,0.447038449,0.043918846,45.42962045,-0.360118799,-27.59379082,108,7127.043394,16424.45438
+
+==> Gesquiere2011_data.csv <==
+maleID  GC      T
+1       66.9    64.57
+
+==> Pacifici2013_data.csv <==
+TaxID;Order;Family;Genus;Scientific_name;AdultBodyMass_g;Sources_AdultBodyMass;Max_longevity_d;Sources_Max_longevity;Rspan_d;AFR_d;Data_AFR;Calculated_GL_d;GenerationLength_d;Sources_GL
+7580;Rodentia;Cricetidae;Eligmodontia;Eligmodontia typus;17.37;PanTHERIA;292;PanTHERIA;254.64;73.74;calculated;147.5856;147.5856;Rspan-AFR(SM+Gest)
+~
+~
+~
+~
+~
+~
+~
+(END)
+

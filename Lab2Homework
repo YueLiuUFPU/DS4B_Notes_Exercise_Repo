@@ -1,0 +1,91 @@
+DSB Lab2 Homework
+
+Exercise 1
+
+Assume you are collecting insects at three different locations, three times a year, over the span of three years. For each day/location of sampling, you record:
+
+§Site data: site of the sampling, its geographic coordinates, description of the site
+§Sampling data: day, month, and year, weather conditions, temperature, humidity, etc.;
+§Species data: classification according to species and stage of development of all the insects collected, their total, and their measurements
+Write out the plan of your design of all the tables you are making, and how you are going to relate them together.
+
+Fist, I will make a table (table 1) for site information including variables as site id, site of the sampling, geographic coordinates, and description of the site. Each variable occupies a column in the table.
+
+Then, I plan to make a table (table 2) for sampling information including variables as sampling id, day, month, and year, weather conditions, temperature, and humidity. Each variable occupies a column in the table.
+
+Third, I plan to make a table (table 3) for species data including site id, sampling id, species name, stage of development the collected insect, total number of collected insects for this species, and their measurements. Each variable occupies a column in the table.
+
+The first two columns in table 3 (the "site id" and "sampling id") are used to relate site information and sampling information to species data.
+
+
+
+Exercise 2
+get the first two lines of all the files ending with .csv within data/ directory, and save them to a single file called “headers.csv” under sandbox/
+
+Last login: Wed Aug 31 16:51:22 on ttys000
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+pal-nat186-25-211:~ liuyue$ ls
+11				Pictures
+11-2				PortalData
+Applications			Public
+Creative Cloud Files		Sites
+DS4Bio_labs			Zotero
+Desktop				data manag
+Documents			iCloud Drive (Archive)
+Downloads			iCloud Drive (Archive) - 1
+Dropbox				iCloud Drive (Archive) - 2
+Final code			iCloud 云盘（归档）
+LAS_tutorial			modlue 7
+Lab1				module 10
+Library				module 11
+M 12				module 13 test
+M4				module 5
+Movies				module 9
+Music
+pal-nat186-25-211:~ liuyue$ cd Desktop/lab1_unix_DSB/sandbox/
+pal-nat186-25-211:sandbox liuyue$ touch headers.csv
+pal-nat186-25-211:sandbox liuyue$ cd../data/
+-bash: cd../data/: No such file or directory
+pal-nat186-25-211:sandbox liuyue$ cd ../data/
+pal-nat186-25-211:data liuyue$ head -n 2 *.csv
+==> Buzzard2015_data.csv <==
+age,plot,genus,species,spcode,Abund.n,biomass,basal.area,SLA,LDMC,LPC,CN,d15N,d13C,plot total abund,total plot biomass,total plot basal area
+10,1,Byrsonima,crassifolia,Byrcra,57,1205.364427,3978.387,62.09219184,0.447038449,0.043918846,45.42962045,-0.360118799,-27.59379082,108,7127.043394,16424.45438
+
+==> Gesquiere2011_data.csv <==
+maleID	GC	T
+1	66.9	64.57
+
+==> Pacifici2013_data.csv <==
+TaxID;Order;Family;Genus;Scientific_name;AdultBodyMass_g;Sources_AdultBodyMass;Max_longevity_d;Sources_Max_longevity;Rspan_d;AFR_d;Data_AFR;Calculated_GL_d;GenerationLength_d;Sources_GL
+7580;Rodentia;Cricetidae;Eligmodontia;Eligmodontia typus;17.37;PanTHERIA;292;PanTHERIA;254.64;73.74;calculated;147.5856;147.5856;Rspan-AFR(SM+Gest)
+pal-nat186-25-211:data liuyue$ cd ../sandbox/
+pal-nat186-25-211:sandbox liuyue$ echo "==> Buzzard2015_data.csv <==
+> age,plot,genus,species,spcode,Abund.n,biomass,basal.area,SLA,LDMC,LPC,CN,d15N,d13C,plot total abund,total plot biomass,total plot basal area
+> 10,1,Byrsonima,crassifolia,Byrcra,57,1205.364427,3978.387,62.09219184,0.447038449,0.043918846,45.42962045,-0.360118799,-27.59379082,108,7127.043394,16424.45438
+> 
+> ==> Gesquiere2011_data.csv <==
+> maleIDGCT
+> 166.964.57
+> 
+> ==> Pacifici2013_data.csv <==
+> TaxID;Order;Family;Genus;Scientific_name;AdultBodyMass_g;Sources_AdultBodyMass;Max_longevity_d;Sources_Max_longevity;Rspan_d;AFR_d;Data_AFR;Calculated_GL_d;GenerationLength_d;Sources_GL
+> 7580;Rodentia;Cricetidae;Eligmodontia;Eligmodontia typus;17.37;PanTHERIA;292;PanTHERIA;254.64;73.74;calculated;147.5856;147.5856;Rspan-AFR(SM+Gest)" >> headers.csv
+pal-nat186-25-211:sandbox liuyue$ cat headers.csv
+==> Buzzard2015_data.csv <==
+age,plot,genus,species,spcode,Abund.n,biomass,basal.area,SLA,LDMC,LPC,CN,d15N,d13C,plot total abund,total plot biomass,total plot basal area
+10,1,Byrsonima,crassifolia,Byrcra,57,1205.364427,3978.387,62.09219184,0.447038449,0.043918846,45.42962045,-0.360118799,-27.59379082,108,7127.043394,16424.45438
+
+==> Gesquiere2011_data.csv <==
+maleIDGCT
+166.964.57
+
+==> Pacifici2013_data.csv <==
+TaxID;Order;Family;Genus;Scientific_name;AdultBodyMass_g;Sources_AdultBodyMass;Max_longevity_d;Sources_Max_longevity;Rspan_d;AFR_d;Data_AFR;Calculated_GL_d;GenerationLength_d;Sources_GL
+7580;Rodentia;Cricetidae;Eligmodontia;Eligmodontia typus;17.37;PanTHERIA;292;PanTHERIA;254.64;73.74;calculated;147.5856;147.5856;Rspan-AFR(SM+Gest)
+pal-nat186-25-211:sandbox liuyue$ 
+
+

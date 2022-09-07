@@ -1,0 +1,53 @@
+Data Science for Biologists Homework
+
+Lab1 Exercise 1
+
+1. If you are currently at the home directory, write down the command to go to data directory (one with absolute path, one with relative path)
+(1) relative path
+pal-nat186-21-101:~ liuyue$ cd Desktop
+pal-nat186-21-101:Desktop liuyue$ ls
+lab1_unix_DSB	undefine
+pal-nat186-21-101:Desktop liuyue$ cd lab1_unix_DSB/
+pal-nat186-21-101:lab1_unix_DSB liuyue$ ls
+data	sandbox
+pal-nat186-21-101:lab1_unix_DSB liuyue$ cd data/
+pal-nat186-21-101:data liuyue$ 
+
+(2) absolute path
+pal-nat186-21-101:data liuyue$ cd ~
+pal-nat186-21-101:~ liuyue$ cd Desktop/lab1_unix_DSB/data/
+pal-nat186-21-101:data liuyue$
+
+2. write down the command to go to miRNA folder and return back
+pal-nat186-21-101:data liuyue$ cd miRNA/
+pal-nat186-21-101:miRNA liuyue$ cd -
+/Users/liuyue/Desktop/lab1_unix_DSB/data
+pal-nat186-21-101:miRNA liuyue$ cd ..
+pal-nat186-21-101:data liuyue$ 
+
+
+Lab1 Exercise 2
+1. command to create an empty file “createEmpty.txt” under the directory of sandbox.
+pal-nat186-21-101:lab1_unix_DSB liuyue$ ls
+data	sandbox
+pal-nat186-21-101:lab1_unix_DSB liuyue$ cd sandbox
+pal-nat186-21-101:sandbox liuyue$ touch createEmpty.txt
+pal-nat186-21-101:sandbox liuyue$ ls
+copThisFolder				createEmpty.txt				underscore_is_preferred
+copyThisFolder				test.csv				unix names should not contain spaces
+
+2. list the contents in data/miRNA, and count the number of files.
+pal-nat186-21-101:sandbox liuyue$ cd ..
+pal-nat186-21-101:lab1_unix_DSB liuyue$ ls data/miRNA/
+ggo_miR.fasta	hsa_miR.fasta	miRNA_about.txt	miR_about.txt	ppa_miR.fasta	ppy_miR.fasta	ptr_miR.fasta	ssy_miR.fasta
+
+8 files
+
+3. list line counts of all the files under data/Saavedra2013
+pal-nat186-21-101:lab1_unix_DSB liuyue$ ls data/Saavedra2013
+n1.txt	n13.txt	n17.txt	n20.txt	n24.txt	n28.txt	n31.txt	n35.txt	n39.txt	n42.txt	n46.txt	n5.txt	n53.txt	n57.txt	n7.txt
+n10.txt	n14.txt	n18.txt	n21.txt	n25.txt	n29.txt	n32.txt	n36.txt	n4.txt	n43.txt	n47.txt	n50.txt	n54.txt	n58.txt	n8.txt
+n11.txt	n15.txt	n19.txt	n22.txt	n26.txt	n3.txt	n33.txt	n37.txt	n40.txt	n44.txt	n48.txt	n51.txt	n55.txt	n59.txt	n9.txt
+n12.txt	n16.txt	n2.txt	n23.txt	n27.txt	n30.txt	n34.txt	n38.txt	n41.txt	n45.txt	n49.txt	n52.txt	n56.txt	n6.txt
+pal-nat186-21-101:lab1_unix_DSB liuyue$ 
+Number of files: 59
