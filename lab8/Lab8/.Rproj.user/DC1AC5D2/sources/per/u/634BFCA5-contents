@@ -1,0 +1,18 @@
+myvec <- 1:10
+for (i in myvec) {
+  a <- i ^ 2
+  print(a)
+}
+
+volumes = c(1.6, 3, 8,9,11,14,16,19,21,23)
+for (i in 1:length(volumes)){
+  mass <- 2.65 * volumes[i] ^ 0.9
+  print(mass)
+}
+masses <- vector(mode = "numeric", length = length(volumes))
+masses
+for (i in 1:length(volumes)){
+  mass <- 2.65 * volumes[i] ^ 0.9
+  masses[i] <- mass
+}
+masses

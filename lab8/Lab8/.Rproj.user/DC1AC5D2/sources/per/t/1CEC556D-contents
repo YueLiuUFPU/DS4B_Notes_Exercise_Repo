@@ -1,0 +1,207 @@
+# DSB Lab8
+# Author :Yue Liu (graduate)
+# Date: 09/30
+
+## Question 1: Self-Incompatibility in Plants
+# 1-1
+rm(list = ls())# clean the work environment
+getwd()
+setwd("/Users/liuyue/Desktop/DSB_Lecture/lab8_exs/Q1")
+plant<-read.csv("Goldberg2010_data.csv")
+table(plant$Status)# count variable "Status"
+incompat_stats<-data.frame(table(plant$Status))# transfer the count table to data frame
+incompat_stats
+colnames(incompat_stats)<-c("Status","Count") # Change column names
+incompat_stats
+
+# 1-2
+install.packages("stringr")
+library("stringr")
+plant
+str(plant)
+plant[c("Genus","newSpecies")] <- str_split_fixed(plant$Species,"_", n = 2) # split the Speceis column to create "Genus" and "newSpecies" columns
+View(plant)# get the updated "plant" including two new columns
+
+Genus_list<-data.frame(table(plant$Genus))
+View(Genus_list) # use data.frame(table()) to create a data set lists all genus
+colnames(Genus_list)<-c("GenusName","Frequency")# change columns' names
+
+results=data.frame() # create an empty data frame "results"
+for (i in Genus_list$GenusName){ # set a for loop
+  a<-subset(plant,plant$Genus==i) # for each iteration, get a subset for a specific genus "i"
+  status_0<-nrow(a[a$Status==0, ]) # count the number of rows which meet the requirement "Status = 0" in the subset a
+  status_1<-nrow(a[a$Status==1, ]) # count the number of rows which meet the requirement "Status = 1" in the subset a
+  status_2<-nrow(a[a$Status==2, ])
+  status_3<-nrow(a[a$Status==3, ])
+  status_4<-nrow(a[a$Status==4, ])
+  status_5<-nrow(a[a$Status==5, ])# count the number of rows which meet the requirement "Status = 5" in the subset a
+  newrow<-c(i,status_0,status_1,status_2,status_3,status_4,status_5) # create a newrow includes the iteration's outputs
+  results=rbind(results,newrow) # append the new row to the "results" data frame
+}
+results # check the data frame I get
+colnames(results)<-c("GenusName","Num_Status_0","Num_Status_1","Num_Status_2","Num_Status_3","Num_Status_4","Num_Status_5") # change columns' name
+View(results) # check my "results" data frame again 
+
+
+## Question 2: Body Mass fo Mammals
+# 2-1
+getwd()
+setwd("/Users/liuyue/Desktop/DSB_Lecture/lab8_exs/Q2")
+Smith<-read.table(file="Smith2003_data.txt",header = FALSE,sep = "", fill=TRUE) # use read.table() function to input data from file.txt
+Smith<-data.frame(Smith) # makes it data. frame
+View(Smith)
+Smith<-replace(Smith,Smith==-999,NA) # replace all -999 with NA 
+colnames(Smith)<-c("Continent", "Status", "Order", "Family","Genus","Species", "log_mass_grams","Combined_mass_grams","Reference") # change column names based on the cues from the about.txt
+View(Smith)
+
+nrow(Smith) # check the number or records, the output is 5736. However, according to the "Smith2003_about.txt", the number of records should be 5731, thus i need to find 5736-5731=5 records with errors.
+
+str(Smith) # check data structure
+
+Smith$Continent<-as.factor(Smith$Continent) # change continent column data type to factors
+levels(Smith$Continent) # get 11 levels for the "continent" variable
+# according to the "Smith2003_about.txt" Continent levels includes SA, NA, EA, insular, oceanic, AUS, AF. 
+# Thus i need to delete the rows with wrong Continent levels:" "154"     "16"      "31"      "4, 59" , 5 row in total, this is why we have 5 more records than the discreption in the about.txt
+# also need to correct the spelling error: "Af" to "AF"
+Smith<-replace(Smith,Smith=="Af","AF") # correct the spelling error in the "Continent" column
+Smith<-Smith[-c(1270,1363,3252,3958,4817), ]
+# i found the 5 rows with errors by sort the continent column in spreadsheet "Smith"
+Smith # get the cleaned dataset
+nrow(Smith)# check if the number of records match the description
+
+# according to the about.txt" the columns "log_mass_grams", "Combined_mass_grams", and "Reference" should be numeric, thus run the following code
+Smith$log_mass_grams<-suppressWarnings(as.numeric(Smith$log_mass_grams))
+Smith$Combined_mass_grams<-as.numeric(Smith$Combined_mass_grams)
+Smith$Reference<-as.factor(Smith$Reference)
+# I saved those code as read_mass.R in my folder, but paste the code here in this combined script for your to check
+
+# 2-2
+# Code version 1
+rm(list = ls())
+getwd()
+setwd("/Users/liuyue/Desktop/DSB_Lecture/lab8_exs/Q2")
+source("read_mass.R") # call "read_mass.R"
+Family_list<-data.frame(table(Smith$Family)) # use data.frame(table()) to create a data set include all Families
+colnames(Family_list)<-c("Family","Frequency") # change columns name
+Family_list
+
+mean_mass_family<-data.frame() # create an empty data frame for saving loop output
+for (i in Family_list$Family) { # set a for loop, i represents each family in the Family_list
+  a<-subset(Smith,Smith$Family==i) # get a subset for the family "i" records
+  aver_mass<-mean(a$log_mass_grams, na.rm=TRUE) # get the average body mass for the family "i", use na.rm=TRUE to let r ignore the NAs
+  newrow<-c(i,aver_mass) # reserve the average body mass in newrow
+  mean_mass_family<-rbind(mean_mass_family,newrow) # append the newrow to the mean_mass_family data frame
+}
+colnames(mean_mass_family)<-c("Family","Mass_Mean") # change columns name
+View(mean_mass_family) # check the results
+
+
+
+# Question 3
+rm(list = ls())
+# 3-1
+getwd()
+setwd("/Users/liuyue/Desktop/DSB_Lecture/lab8_exs/Q3")
+source("getArea.R") # need install a package called "EBImage"
+install.packages("EBImage") # need update R version
+R.version # check my R version
+
+# try those code to install the package
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("EBImage")
+a
+library("EBImage")
+
+source("getArea.R") # open "getArea.R" within current shell
+getArea("t1_B21m.JPG", file_dir = ".")
+list_pic<-list.files(pattern = "*.JPG") # create picture file names list
+results<-data.frame()# create an empty data farem to save for loop output
+for (i in list_pic){
+  a<-getArea(i, file_dir = ".")
+  newrow<-c(i,a)
+  results<-rbind(results,newrow)
+}
+colnames(results)<-c("FileName","LeafArea")# change columns name
+View(results)
+
+# 3-2
+results[c("time","NewFileName")]<-str_split_fixed(results$FileName, "_", n = 2)# split the FileName column to add two new columns to the "results", one indicate time, another indicate New file name
+View(results)
+plot(results$LeafArea[results$time=="t1"],results$LeafArea[results$time=="t2"], xlab ="leaf area at time 1", ylab="leaf area at time 2") # make the plot
+
+# 3-3
+results$LeafArea<-as.numeric(results$LeafArea)
+Before<-subset(results,results$time=="t1")# get a subset includes first time data only
+After<-subset(results,results$time=="t2")# get a subset includes second time data only
+Before
+After
+t.test(Before$LeafArea, After$LeafArea,paired = TRUE) # run the t-test
+# p-value = 3.572e-15. Yes, the plants significantly differ at time points 1 and 2 
+
+
+
+# Question 4
+# Q4-1
+rm(list = ls())
+getwd()
+setwd("/Users/liuyue/Desktop/DSB_Lecture/lab8_exs/Q4")
+Cita<-read.csv("Letchford2015_data.csv") 
+Cita_2010<-subset(Cita,Cita$year==2010) # extract all the papers published in 2010
+View(Cita_2010) # view the subset
+Cita_2010$rank_title<-rank(Cita_2010$title_length)# rank the articles by title length, and add a title rank column to the data set
+Cita_2010$rank_cit<-rank(Cita_2010$cites)# # rank the articles by citations, and add a citation rank column to the data set
+View(Cita_2010)
+as.numeric(Cita_2010$rank_title)
+as.numeric(Cita_2010$rank_cit)
+res<-cor.test(Cita_2010$rank_title,Cita_2010$rank_cit, method="kendall")
+res # i got got a τ of about -0.07 (-0.06551962) with a significant p-value (p-value < 2.2e-16) as the author
+
+
+# Q4-2
+# create a function with could calculate the correlation for a particular journal-year combination
+Journ_year<- function (i,j) { # create the function
+      a=subset(Cita,(Cita$journal==i & Cita$year==j)) # get the subset includes rows for a journal and a specif year only, i = journal name, j = year
+      res_jour_year<-cor.test(rank(a$title_length),rank(a$cites),method="kendall") # calculate the correlation
+      print(res_jour_year)
+}
+
+# run the function for each journal-year combination
+Journ_year("Nature","2007")
+Journ_year("Nature","2008")
+Journ_year("Nature","2009")
+Journ_year("Nature","2010")
+Journ_year("Nature","2011")
+Journ_year("Nature","2012")
+Journ_year("Nature","2013")
+
+Journ_year("Science","2007")
+Journ_year("Science","2008")
+Journ_year("Science","2009")
+Journ_year("Science","2010")
+Journ_year("Science","2011")
+Journ_year("Science","2012")
+Journ_year("Science","2013")
+
+Journ_year("The Lancet","2007") # no enough paper published this year to run the analysis
+Journ_year("The Lancet","2008")
+Journ_year("The Lancet","2009")
+Journ_year("The Lancet","2010")
+Journ_year("The Lancet","2011")
+Journ_year("The Lancet","2012")
+Journ_year("The Lancet","2013")
+
+Journ_year("New Eng J Med","2007")
+Journ_year("New Eng J Med","2008")
+Journ_year("New Eng J Med","2009")
+Journ_year("New Eng J Med","2010")
+Journ_year("New Eng J Med","2011")
+Journ_year("New Eng J Med","2012")
+Journ_year("New Eng J Med","2013")
+
+
+# Do you always find a negative, significant correlation
+# my answer is no. There are non-significant results or positive, significant correlation.
+
+
+
